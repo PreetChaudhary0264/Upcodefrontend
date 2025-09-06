@@ -29,7 +29,7 @@ export const login = (email, password, role, navigate) => {
       toast.success("Login Successful");
 
       dispatch(setToken(response.data.token));
-      localStorage.setItem("token", JSON.stringify(response.data.token));
+      sessionStorage.setItem("token", JSON.stringify(response.data.token));
 
       const userImage = response.data?.user?.image
         ? response.data.user.image

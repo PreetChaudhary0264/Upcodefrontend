@@ -11,7 +11,7 @@ const safeParse = (item) => {
 };
 
 const initialState = {
-  token: safeParse(localStorage.getItem("token")),
+  token: safeParse(sessionStorage.getItem("token")),
   user: safeParse(localStorage.getItem("user")),
   loading: false,
 };
@@ -23,7 +23,7 @@ const authSlice = createSlice({
     setToken(state, action) {
       state.token = action.payload;
       // save consistently
-      localStorage.setItem("token", JSON.stringify(action.payload));
+      sessionStorage.setItem("token", JSON.stringify(action.payload));
     },
     setUser(state, action) {
       state.user = action.payload;
