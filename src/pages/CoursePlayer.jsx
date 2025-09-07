@@ -49,18 +49,19 @@ const CoursePlayer = () => {
   }
 
   return (
-  <div className="flex h-170 bg-gray-900 text-white overflow-hidden">
+  <div className="flex flex-col md:flex-row bg-gray-900 text-white min-h-screen overflow-hidden">
+    
     {/* Video Player */}
-    <div className="flex-1 p-6 overflow-hidden">
-      <h1 className="text-2xl font-bold mb-4">{course.courseName}</h1>
+    <div className="flex-1 p-4 md:p-6 overflow-hidden">
+      <h1 className="text-2xl md:text-3xl font-bold mb-4">{course.courseName}</h1>
       {currentLecture ? (
         <>
-          <h2 className="text-lg mb-2">{currentLecture.title}</h2>
+          <h2 className="text-lg md:text-xl mb-2">{currentLecture.title}</h2>
           <video
             key={currentLecture._id}
             src={currentLecture.videoUrl}
             controls
-            className="w-full max-h-[70vh] rounded-lg bg-black"
+            className="w-full max-h-[50vh] md:max-h-[70vh] rounded-lg bg-black"
           />
         </>
       ) : (
@@ -69,8 +70,8 @@ const CoursePlayer = () => {
     </div>
 
     {/* Lecture Sidebar */}
-    <div className="w-80 border-l border-gray-700 p-4 h-full overflow-y-auto">
-      <h2 className="text-xl font-semibold mb-4">Lectures</h2>
+    <div className="w-full md:w-80 border-t md:border-t-0 md:border-l border-gray-700 p-4 h-auto md:h-full overflow-y-auto">
+      <h2 className="text-xl md:text-2xl font-semibold mb-4">Lectures</h2>
       {course.courseContent.map((section) => (
         <div key={section._id} className="mb-4">
           <p className="text-yellow-400 font-medium">{section.sectionName}</p>
@@ -79,10 +80,10 @@ const CoursePlayer = () => {
               <li
                 key={lec._id}
                 onClick={() => setCurrentLecture(lec)}
-                className={`p-2 rounded cursor-pointer ${
+                className={`p-2 rounded cursor-pointer transition-colors duration-200 ${
                   currentLecture?._id === lec._id
                     ? "bg-yellow-500 text-black"
-                    : "bg-gray-800 hover:bg-gray-700"
+                    : "bg-gray-800 hover:bg-yellow-500 hover:text-black"
                 }`}
               >
                 {lec.title}
@@ -94,6 +95,7 @@ const CoursePlayer = () => {
     </div>
   </div>
 );
+
 };
 
 export default CoursePlayer;

@@ -94,21 +94,26 @@ const BuyCourse = () => {
     paymentObject.open();
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h1 className="text-3xl font-bold mb-6">Buy Course</h1>
-      <p className="mb-4">
-        You are about to purchase course ID:{" "}
-        <span className="text-yellow-400">{courseId}</span>
-      </p>
-      <button
-        onClick={handleBuyNow}
-        className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg transition"
-      >
-        Buy Now
-      </button>
-    </div>
-  );
+ return (
+  <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4 sm:px-6 lg:px-8">
+    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center">
+      Buy Course
+    </h1>
+
+    <p className="mb-4 sm:mb-6 text-center text-sm sm:text-base md:text-lg">
+      You are about to purchase course ID:{" "}
+      <span className="text-yellow-400 font-semibold">{courseId}</span>
+    </p>
+
+    <button
+      onClick={handleBuyNow}
+      className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition transform hover:scale-105"
+    >
+      Buy Now
+    </button>
+  </div>
+);
+
 };
 
 export default BuyCourse;

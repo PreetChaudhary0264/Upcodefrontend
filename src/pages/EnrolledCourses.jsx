@@ -39,70 +39,59 @@ const EnrolledCourses = () => {
   }, [])
 
   return (
-    <div className="min-h-[calc(100vh-56px)] p-6 bg-gray-900">
-      <h2 className="text-2xl font-semibold mb-6 text-white">Enrolled Courses</h2>
+  <div className="min-h-[calc(100vh-56px)] p-4 sm:p-6 bg-gray-900">
+    <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-white">Enrolled Courses</h2>
 
-      {!enrolledCourses ? (
-        <div className="text-gray-400">Loading ...</div>
-      ) : !enrolledCourses.length ? (
-        <p className="text-gray-400">You have not enrolled in any course yet</p>
-      ) : (
-        <div className="w-full">
-          {/* Table Header */}
-          <div className="grid grid-cols-3 font-semibold text-gray-200 bg-gray-800 px-4 py-3 rounded-t-lg">
-            <p>Course Name</p>
-            <p className="text-center">Duration</p>
-            <p className="text-center">Progress</p>
-          </div>
-
-          {/* Cards */}
-          <div className="divide-y divide-gray-700 bg-gray-900 rounded-b-lg">
-            {enrolledCourses.map((course, index) => (
-              <div
-                key={index}
-                className="grid grid-cols-3 items-center px-4 py-4 hover:bg-gray-800 transition cursor-pointer"
-                onClick={() => navigate(`/course/${course._id}`)} // 👈 navigate to course player
-              >
-                {/* Course Info */}
-                <div className="flex items-center gap-4">
-                  <img
-                    src={course.thumbnail}
-                    alt={course.courseName}
-                    className="w-16 h-16 object-cover rounded-lg"
-                  />
-                  <div>
-                    <p className="font-medium text-white">{course.courseName}</p>
-                    <p className="text-sm text-gray-400 line-clamp-2">
-                      {course.courseDescription}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Duration */}
-                <div className="text-center text-gray-300">
-                  {course?.totalDuration || "N/A"}
-                </div>
-
-                {/* Progress */}
-                <div className="text-center">
-                  <p className="text-sm text-gray-300 mb-1">
-                    {course.progressPercentage || 0}%
-                  </p>
-                  <ProgressBar
-                    completed={course.progressPercentage || 0}
-                    height="8px"
-                    isLabelVisible={false}
-                    bgColor="#22c55e"
-                    baseBgColor="#374151"
-                  />
-                </div>
+    {!enrolledCourses ? (
+      <div className="text-gray-400">Loading ...</div>
+    ) : !enrolledCourses.length ? (
+      <p className="text-gray-400 text-lg">You have not enrolled in any course yet</p>
+    ) : (
+      <div className="w-full space-y-4">
+        {enrolledCourses.map((course, index) => (
+          <div
+            key={index}
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-800 rounded-lg p-4 sm:p-6  transition cursor-pointer gap-4"
+            onClick={() => navigate(`/course/${course._id}`)}
+          >
+            {/* Course Info */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 flex-1">
+              <img
+                src={course.thumbnail}
+                alt={course.courseName}
+                className="w-full sm:w-32 h-32 sm:h-24 object-cover rounded-lg flex-shrink-0"
+              />
+              <div className="flex-1">
+                <p className="font-semibold text-xl sm:text-2xl text-white">
+                  {course.courseName}
+                </p>
+                <p className="text-gray-400 text-sm sm:text-base line-clamp-2 mt-1 sm:mt-2">
+                  {course.courseDescription}
+                </p>
               </div>
-            ))}
+            </div>
+
+            {/* Progress */}
+            <div className="mt-3 sm:mt-0 w-full sm:w-1/4 flex flex-col items-start sm:items-center">
+              <p className="text-sm sm:text-base text-gray-300 mb-1">
+                {course.progressPercentage || 0}%
+              </p>
+              <ProgressBar
+                completed={course.progressPercentage || 0}
+                height="10px"
+                isLabelVisible={false}
+                bgColor="#22c55e"
+                baseBgColor="#374152"
+                className="w-full rounded-lg"
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        ))}
+      </div>
+    )}
+  </div>
+);
+
 }
 
 export default EnrolledCourses

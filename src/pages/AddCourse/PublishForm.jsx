@@ -41,48 +41,45 @@ const PublishForm = ({ onBack }) => {
   }
 
   return (
-    <div className='h-124'>
-
-      <div className=' pl-40'>
-      <div className="rounded-md border-[1px] bg-gray-800 ml-50 p-6 border-gray-700 w-150">
-        <p className="text-2xl text-yellow-400">Publish Course</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mt-5 items-center">
-            <label htmlFor="public" className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id="public"
-                {...register("public")}
-                 className="h-5 w-5 rounded border-gray-600 text-yellow-400 focus:ring-yellow-500 bg-gray-700"
-              />
-              <span className="text-white text-lg">Make this Course Public</span>
-            </label>
-          </div>
-
-          <div className="flex gap-4 mt-6">
-            {/* Back Button */}
-            <button
-              type="button"
-              onClick={goBack}    // goBack laga diya
-              className="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition"
-            >
-              Back
-            </button>
-
-            {/* Publish Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-4 py-2 rounded-md bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition disabled:opacity-50"
-            >
-              {loading ? "Publishing..." : "Publish"}
-            </button>
-          </div>
-        </form>
+    <div className="min-h-126 flex justify-center items-start py-8 px-4 sm:px-6 lg:px-8">
+  <div className="w-full max-w-md rounded-md border bg-gray-800 p-6 border-gray-700">
+    <p className="text-2xl text-yellow-400">Publish Course</p>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="mt-5">
+        <label htmlFor="public" className="flex items-center gap-3">
+          <input
+            type="checkbox"
+            id="public"
+            {...register("public")}
+            className="h-5 w-5 rounded border-gray-600 text-yellow-400 focus:ring-yellow-500 bg-gray-700"
+          />
+          <span className="text-white text-lg">Make this Course Public</span>
+        </label>
       </div>
-    </div>
 
-    </div>
+      <div className="flex flex-col sm:flex-row gap-4 mt-6">
+        {/* Back Button */}
+        <button
+          type="button"
+          onClick={goBack}
+          className="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition w-full sm:w-auto"
+        >
+          Back
+        </button>
+
+        {/* Publish Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-4 py-2 rounded-md bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition disabled:opacity-50 w-full sm:w-auto"
+        >
+          {loading ? "Publishing..." : "Publish"}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
   )
 }
 

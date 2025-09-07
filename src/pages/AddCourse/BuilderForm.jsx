@@ -77,42 +77,61 @@ const BuilderForm = () => {
     
 
   return (
-    <div className='text-white min-h-[calc(100vh-15rem)]'>
-      <form onSubmit={handleSubmit(onSubmit)} className='bg-gray-800 p-6 rounded-md w-full max-w-4xl mx-auto space-y-6 border border-gray-700'>
-        <div>
-            <label htmlFor='sectionName '>Section Name<sup className='text-red-800'>*</sup></label>
-            <input
-            id='sectionName'
-            placeholder='Add Section Name'
-            {...register("sectionName", {required:true})}
-            className='w-full text-white bg-gray-900 border border-gray-600 rounded-md px-3 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-500'
-            />
-            {errors.sectionName && (<span>Section Name is Required</span>)}
-        </div>
-
-        <div>
-           <button className='flex gap-1 bg-yellow-500 text-gray-900 font-semibold px-3 py-2 rounded-md hover:bg-yellow-600 transition hover:cursor-pointer'
-            type='submit'>{editSectionname ? ("Edit Section Name"):(<>Create Section <IoIosAddCircleOutline className='mt-0.8 text-2xl'/> </>)} </button>
-        </div>
-
-         {
-        course?.courseContent?.length > 0 && (
-           <NestedView/>
-        )}
-
-      </form>
-
-      
-
-        <div className='flex gap-8  ml-245 mt-4'>
-            <button onClick={goBack} className=' bg-gray-400 text-gray-900 font-semibold px-3 py-2 rounded-md hover:bg-gray-500 transition hover:cursor-pointer'>
-                Back
-            </button>
-            <button onClick={goToNext} className=' bg-yellow-500 text-gray-900 font-semibold px-3 py-2 rounded-md hover:bg-yellow-600 transition hover:cursor-pointer'>
-                Next
-            </button>
-        </div>
+    <div className="text-white min-h-[calc(100vh-15rem)] px-4 sm:px-6 lg:px-8">
+  <form
+    onSubmit={handleSubmit(onSubmit)}
+    className="bg-gray-800 p-6 rounded-md w-full max-w-4xl mx-auto space-y-6 border border-gray-700"
+  >
+    <div>
+      <label htmlFor="sectionName">
+        Section Name<sup className="text-red-800">*</sup>
+      </label>
+      <input
+        id="sectionName"
+        placeholder="Add Section Name"
+        {...register("sectionName", { required: true })}
+        className="w-full text-white bg-gray-900 border border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      />
+      {errors.sectionName && (
+        <span className="text-red-500 text-sm">Section Name is Required</span>
+      )}
     </div>
+
+    <div>
+      <button
+        className="flex gap-1 items-center bg-yellow-500 text-gray-900 font-semibold px-3 py-2 rounded-md hover:bg-yellow-600 transition"
+        type="submit"
+      >
+        {editSectionname ? (
+          "Edit Section Name"
+        ) : (
+          <>
+            Create Section <IoIosAddCircleOutline className="text-2xl" />
+          </>
+        )}
+      </button>
+    </div>
+
+    {course?.courseContent?.length > 0 && <NestedView />}
+  </form>
+
+  {/* Buttons */}
+  <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center mt-4">
+    <button
+      onClick={goBack}
+      className="bg-gray-400 text-gray-900 font-semibold px-3 py-2 rounded-md hover:bg-gray-500 transition"
+    >
+      Back
+    </button>
+    <button
+      onClick={goToNext}
+      className="bg-yellow-500 text-gray-900 font-semibold px-3 py-2 rounded-md hover:bg-yellow-600 transition"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
   )
 }
 

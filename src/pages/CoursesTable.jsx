@@ -28,72 +28,54 @@ const CoursesTable = ({ courses, setCourses }) => {
   }
 
   return (
-  <div className="mt-6 w-full px-8">
-    <div className="overflow-hidden rounded-2xl shadow-lg bg-gray-800">
-      <Table className="w-full border-collapse">
-        <Thead className="bg-gray-900 text-white">
-          <Tr>
-            <Th className="py-4 px-6 text-left font-semibold text-lg">Course</Th>
-            <Th className="py-4 px-6 text-left font-semibold text-lg">Price</Th>
-            <Th className="py-4 px-6 text-left font-semibold text-lg">Actions</Th>
-          </Tr>
-        </Thead>
+  <div className="mt-6 w-full px-4 sm:px-6 lg:px-8 flex flex-col gap-6">
+  {courses.length === 0 ? (
+    <p className="text-center text-gray-300 text-lg py-6">No Courses Found</p>
+  ) : (
+    courses.map((course, idx) => (
+      <div
+        key={course._id}
+        className={`flex flex-col md:flex-row bg-gray-${idx % 2 === 0 ? "800" : "700"} rounded-2xl shadow-lg overflow-hidden hover:bg-gray-600 transition cursor-pointer`}
+      >
+        {/* Course Info */}
+        <div className="flex flex-col md:flex-row flex-1 gap-4 p-4">
+          <img
+            src={course.thumbnail}
+            alt={course.courseName}
+            className="w-full md:w-[200px] h-48 md:h-[120px] object-cover rounded-lg shadow-md"
+          />
+          <div className="flex flex-col justify-between">
+            <div>
+              <p className="text-white font-semibold text-lg md:text-xl">{course.courseName}</p>
+              <p className="text-gray-300 text-sm md:text-base mt-1 line-clamp-3">{course.courseDescription}</p>
+            </div>
+            <p className="text-pink-400 uppercase font-medium text-xs mt-2 md:mt-0">{course.status}</p>
+          </div>
+        </div>
 
-        <Tbody>
-          {courses.length === 0 ? (
-            <Tr>
-              <Td colSpan={3} className="text-center p-6 text-gray-300">
-                No Courses Found
-              </Td>
-            </Tr>
-          ) : (
-            courses.map((course, idx) => (
-              <Tr
-                key={course._id}
-                className={`${
-                  idx % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
-                } hover:bg-gray-600 transition-colors`}
-              >
-                <Td className="p-4">
-                  <div className="flex gap-4 items-start">
-                    <img
-                      src={course.thumbnail}
-                      alt={course.courseName}
-                      className="h-[120px] w-[200px] rounded-lg object-cover shadow-md"
-                    />
-                    <div className="flex flex-col gap-1">
-                      <p className="font-semibold text-white text-lg">{course.courseName}</p>
-                      <p className="text-sm text-gray-300">{course.courseDescription}</p>
-                      <p className="text-xs font-medium text-pink-400 uppercase tracking-wide">
-                        {course.status}
-                      </p>
-                    </div>
-                  </div>
-                </Td>
+        {/* Price & Actions */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 md:w-[200px]">
+          <p className="text-gray-200 font-medium text-lg">₹{course.price}</p>
+          <div className="flex gap-3">
+            <button className="text-blue-400 hover:text-blue-500 transition-colors">
+              <MdEdit size={22} />
+            </button>
+            <button
+              onClick={() => handleDelete(course._id)}
+              disabled={loading}
+              className="text-red-400 hover:text-red-500 transition-colors"
+            >
+              <MdDelete size={22} />
+            </button>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
+</div>
 
-                <Td className="p-4 text-gray-200 font-medium">
-                  ₹{course.price}
-                </Td>
 
-                <Td className="p-4 flex gap-3 mt-10">
-                  <button className="text-blue-400 hover:text-blue-500 transition-colors">
-                    <MdEdit size={22} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(course._id)}
-                    disabled={loading}
-                    className="text-red-400 hover:text-red-500 transition-colors"
-                  >
-                    <MdDelete size={22} />
-                  </button>
-                </Td>
-              </Tr>
-            ))
-          )}
-        </Tbody>
-      </Table>
-    </div>
-  </div>
+
 );
 
 }

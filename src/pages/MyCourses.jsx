@@ -23,23 +23,30 @@ const MyCourses = () => {
   }, [token, user])
 
   return (
-    <div className='bg-gray-900 min-h-[calc(100vh-56px)]'>
-      <div className="flex justify-between items-center mb-4 text-white">
-        <h1 className="text-3xl font-bold mx-6 mt-3">My Courses</h1>
-        <button
-          className="bg-yellow-400 px-4 py-2 rounded-md text-black hover:cursor-pointer mx-6 mt-3"
-          onClick={() => navigate('/dashboard/add-course')}
-        >
-          Add Course
-        </button>
-      </div>
+    <div className="bg-gray-900 min-h-[calc(100vh-56px)] px-4 sm:px-6 lg:px-8 py-6">
+  {/* Header */}
+  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+    <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-0">
+      My Courses
+    </h1>
+    <button
+      className="bg-yellow-400 px-4 py-2 rounded-md text-black hover:cursor-pointer w-full sm:w-auto text-center"
+      onClick={() => navigate('/dashboard/add-course')}
+    >
+      Add Course
+    </button>
+  </div>
 
-        {courses && courses.length > 0 ? (
-        <CoursesTable courses={courses} setCourses={setCourses} />
-      ) : (
-        <p>No courses found.</p>
-      )}
+  {/* Courses Table */}
+  {courses && courses.length > 0 ? (
+    <div className="overflow-x-auto">
+      <CoursesTable courses={courses} setCourses={setCourses} />
     </div>
+  ) : (
+    <p className="text-gray-400 text-center mt-6">No courses found.</p>
+  )}
+</div>
+
   )
 }
 

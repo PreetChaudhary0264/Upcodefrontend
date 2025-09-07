@@ -2,10 +2,9 @@ import { useState } from "react";
 import loginStudent from "../assets/login.webp";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {login} from "../services/operations/authAPI"
+import { login } from "../services/operations/authAPI";
 
 const Login = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -13,22 +12,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
- 
-
   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    dispatch(login(email,password,role,navigate))
+    dispatch(login(email, password, role, navigate));
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center px-6">
-      <div className="bg-gray-900 rounded-lg shadow-lg flex w-full max-w-5xl overflow-hidden">
-        
+    <div className="min-h-screen bg-gray-800 flex items-center justify-center px-4 sm:px-6">
+      <div className="bg-gray-900 rounded-lg shadow-lg flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
+
         {/* Left Section - Form */}
-        <div className="w-1/2 p-10 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Login</h2>
+        <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Login</h2>
 
           {/* Role Switch */}
           <div className="flex gap-4 mb-6">
@@ -55,10 +51,7 @@ const Login = () => {
           </div>
 
           {/* Login Form */}
-          <form
-            className="flex flex-col space-y-5"
-            onSubmit={handleSubmit}
-          >
+          <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
             <input
               type="email"
               placeholder="Email"
@@ -75,17 +68,14 @@ const Login = () => {
             />
 
             <div className="flex justify-between items-center text-sm">
-              <a
-                href="/forgot-password"
-                className="text-yellow-400 hover:underline"
-              >
+              <a href="/forgot-password" className="text-yellow-400 hover:underline">
                 Forgot Password?
               </a>
             </div>
 
             <button
               type="submit"
-              className="hover:cursor-pointer transition-transform duration-300 hover:scale-105 w-full bg-yellow-400 text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition"
+              className="hover:cursor-pointer transition-transform duration-300 hover:scale-105 w-full bg-yellow-400 text-black font-semibold py-3 rounded-lg hover:bg-yellow-500"
             >
               Login
             </button>
@@ -93,11 +83,11 @@ const Login = () => {
         </div>
 
         {/* Right Section - Image */}
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2 hidden md:flex justify-center items-center">
           <img
             src={loginStudent}
             alt="Login Illustration"
-            className="w-[60%] h-full object-cover ml-25"
+            className="w-3/4 md:w-[60%] h-auto object-cover"
           />
         </div>
       </div>
@@ -106,4 +96,5 @@ const Login = () => {
 };
 
 export default Login;
+
 
