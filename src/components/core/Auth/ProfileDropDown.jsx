@@ -33,7 +33,7 @@ const ProfileDropDown = ({ setMenuOpen }) => {
   };
 
   return (
-    <div className="relative w-full custom-md:w-auto" ref={dropdownRef}>
+    <div className="relative custom-md:w-auto" ref={dropdownRef}>
       {/* Profile Button */}
       <button
         onClick={() => setOpen(!open)}

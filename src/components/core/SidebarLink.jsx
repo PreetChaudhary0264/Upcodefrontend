@@ -1,12 +1,10 @@
 import React from "react";
 import { NavLink, matchPath, useLocation } from "react-router-dom";
 import * as Icons from "react-icons/vsc";
-import { useDispatch } from "react-redux";
 
-const SidebarLink = ({ link, iconName }) => {
+const SidebarLink = ({ link, iconName, onClick }) => {
   const Icon = Icons[iconName]; // dynamic icon
   const location = useLocation();
-  const dispatch = useDispatch();
 
   // check if current route matches
   const isActive = (route) => {
@@ -16,6 +14,9 @@ const SidebarLink = ({ link, iconName }) => {
   return (
     <NavLink
       to={link.path}
+      onClick={() => {
+        if (onClick) onClick(); // <-- trigger parent handler
+      }}
       className={`relative px-8 py-2 text-sm font-medium transition-all duration-200 ${
         isActive(link.path) ? "bg-yellow-800 text-yellow-50" : "text-gray-300"
       }`}
@@ -36,4 +37,5 @@ const SidebarLink = ({ link, iconName }) => {
 };
 
 export default SidebarLink;
+
 

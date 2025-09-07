@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import ProfileDropDown from '../components/core/Auth/ProfileDropDown';
 import { fetchCourseCategories } from '../services/operations/courseDetailsApi';
 import { GiHamburgerMenu } from "react-icons/gi";
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
@@ -30,7 +31,7 @@ const Navbar = () => {
   }, [])
 
   return (
-    <div className="bg-gray-900 flex flex-col custom-md:flex-row custom-md:h-14 items-center justify-between border-b border-gray-500 px-4 custom-md:px-6 lg:px-16">
+   <div className="bg-gray-900 flex flex-col custom-md:flex-row custom-md:h-14 items-center justify-between border-b border-gray-500 px-4 custom-md:px-6 lg:px-16 relative">
   <style jsx>{`
     @media (min-width: 800px) {
       .custom-md\\:flex-row { flex-direction: row; }
@@ -61,77 +62,76 @@ const Navbar = () => {
     </div>
   </div>
 
-  {/* Center Nav Links */}
-  <nav
-    className={`${
-      menuOpen ? "flex" : "hidden"
-    } custom-md:flex flex-col custom-md:flex-row items-start custom-md:items-center gap-y-2 custom-md:gap-x-6 mt-3 custom-md:mt-0 flex-1 justify-center`}
-  >
-    <ul className="flex flex-col custom-md:flex-row gap-y-2 custom-md:gap-x-6 text-white items-start">
-      {NavbarLinks.map((link, index) => (
-        <li key={index} className="relative">
-          {link.title === "Catalog" ? (
-            <div className="relative flex flex-col items-start">
-              <div
-                className="flex items-center gap-1 text-2xl text-white cursor-pointer px-2 py-1"
-                onClick={() => setCatalogOpen((prev) => !prev)}
-              >
-                <p className="text-2xl">Catalog</p>
-              </div>
+  {/* Desktop Center Nav Links */}
 
-              {/* dropdown */}
-              <div
-                className={`absolute z-50 left-0 top-full flex flex-col rounded-md bg-white text-gray-800 shadow-lg lg:w-[300px] transition-all duration-200
-                  ${catalogOpen ? "visible opacity-100" : "invisible opacity-0"}
-                `}
-              >
-                {subLinks.length ? (
-                  subLinks.map((subLink, index) => (
-                    <Link
-                      to={`/catalog/${subLink.name}`}
-                      key={index}
-                      className="px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-blue-600 transition-colors rounded-md"
-                      onClick={() => {
-                        setCatalogOpen(false);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {subLink.name}
-                    </Link>
-                  ))
-                ) : (
-                  <div />
-                )}
-              </div>
-            </div>
-          ) : (
-            <Link
-              to={link?.path}
-              className="px-2 py-1 flex items-center"
-              onClick={() => setMenuOpen(false)}
+<nav className="hidden custom-md:flex flex-row items-center gap-x-6 flex-1 justify-center">
+  <ul className="flex flex-row gap-x-6 text-white items-center">
+    {NavbarLinks.map((link, index) => (
+      <li key={index} className="relative">
+        {link.title === "Catalog" ? (
+          <div className="relative flex flex-col items-start">
+            <div
+              className="flex items-center gap-1 text-2xl text-white cursor-pointer px-2 py-1"
+              onClick={() => {
+                if (token === null) {
+                  toast.error("Please login first");
+                } else {
+                  setCatalogOpen((prev) => !prev);
+                }
+              }}
             >
-              <p
-                className={`${
-                  matchRoute(link?.path)
-                    ? "text-yellow-400 text-2xl"
-                    : "text-white text-2xl"
-                }`}
-              >
-                {link.title}
-              </p>
-            </Link>
-          )}
-        </li>
-      ))}
-    </ul>
-  </nav>
+              <p className="text-2xl">Catalog</p>
+            </div>
 
-  {/* Right Section */}
-  <div
-    className={`${
-      menuOpen ? "flex" : "hidden"
-    } custom-md:flex flex-col custom-md:flex-row items-start custom-md:items-center gap-2 custom-md:gap-3 mt-2 custom-md:mt-0`}
-  >
+            {/* Catalog dropdown */}
+            <div
+              className={`absolute z-50 left-0 top-full flex flex-col rounded-md bg-white text-gray-800 shadow-lg lg:w-[300px] transition-all duration-200
+                ${catalogOpen ? "visible opacity-100" : "invisible opacity-0"}
+              `}
+            >
+              {subLinks.length ? (
+                subLinks.map((subLink, index) => (
+                  <Link
+                    to={`/catalog/${subLink.name}`}
+                    key={index}
+                    className="px-4 py-2 text-gray-700 hover:bg-gray-200 hover:text-blue-600 transition-colors rounded-md"
+                    onClick={() => {
+                      setCatalogOpen(false);
+                      setMenuOpen(false);
+                    }}
+                  >
+                    {subLink.name}
+                  </Link>
+                ))
+              ) : (
+                <div />
+              )}
+            </div>
+          </div>
+        ) : (
+          <Link
+            to={link?.path}
+            className="px-2 py-1 flex items-center"
+          >
+            <p
+              className={`${
+                matchRoute(link?.path)
+                  ? "text-yellow-400 text-2xl"
+                  : "text-white text-2xl"
+              }`}
+            >
+              {link.title}
+            </p>
+          </Link>
+        )}
+      </li>
+    ))}
+  </ul>
+</nav>
+
+
+  {/* Desktop Right Section */}
+  <div className="hidden custom-md:flex flex-row items-center gap-3">
     {user && user.accountType !== "Instructor" && (
       <Link to="/dashboard/cart" className="relative">
         <BsCart4 className="text-2xl text-white" />
@@ -143,28 +143,62 @@ const Navbar = () => {
       </Link>
     )}
 
-    {token === null && (
+    {token === null ? (
       <>
-        <Link to="/login" onClick={() => setMenuOpen(false)}>
+        <Link to="/login">
           <button className="border border-gray-500 bg-gray-800 px-3 py-2 text-white rounded-md hover:cursor-pointer">
             Login
           </button>
         </Link>
-        <Link to="/signup" onClick={() => setMenuOpen(false)}>
+        <Link to="/signup">
           <button className="border border-gray-500 bg-gray-800 px-3 py-2 text-white rounded-md hover:cursor-pointer">
             Sign Up
           </button>
         </Link>
       </>
+    ) : (
+      <ProfileDropDown setMenuOpen={setMenuOpen} />
     )}
-
-    {token !== null && <ProfileDropDown setMenuOpen={setMenuOpen} />}
   </div>
+
+  {/* Mobile Dropdown (separate panel) */}
+  {menuOpen && (
+    <div className="absolute top-14 left-0 w-full bg-gray-900 flex flex-col gap-4 p-4 z-50 custom-md:hidden shadow-lg">
+      <ul className="flex flex-col gap-4 text-white">
+        {NavbarLinks.map((link, index) => (
+          <li key={index}>
+            <Link
+              to={link?.path}
+              className="block text-xl"
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <div className="flex flex-row items-start gap-2">
+        {token === null ? (
+          <>
+            <Link to="/login" onClick={() => setMenuOpen(false)}>
+              <button className="border border-gray-500 bg-gray-800 px-3 py-2 text-white rounded-md">
+                Login
+              </button>
+            </Link>
+            <Link to="/signup" onClick={() => setMenuOpen(false)}>
+              <button className="border border-gray-500 bg-gray-800 px-3 py-2 text-white rounded-md">
+                Sign Up
+              </button>
+            </Link>
+          </>
+        ) : (
+          <ProfileDropDown setMenuOpen={setMenuOpen} />
+        )}
+      </div>
+    </div>
+  )}
 </div>
-
-
-
-
   )
 }
 

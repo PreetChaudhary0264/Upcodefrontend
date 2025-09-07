@@ -46,9 +46,7 @@ const Catalog = () => {
 
   const getCategoryDetails = async () => {
     try {
-      console.log("Api call with categoryId", categoryId);
       const res = await getCatalogPageDetails(categoryId);
-      console.log("Courses By Category", res);
       setCatalogPageData(res);
     } catch (error) {
       console.log(error);

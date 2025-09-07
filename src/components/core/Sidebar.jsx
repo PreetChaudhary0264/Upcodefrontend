@@ -6,11 +6,10 @@ import * as Icons from "react-icons/vsc";
 import { logout } from "../../services/operations/authAPI";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ onLinkClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // agar tera profileSlice alag hai:
   const { user, loading: profileLoading } = useSelector((state) => state.auth);
   const { loading: authLoading } = useSelector((state) => state.auth);
 
@@ -21,7 +20,6 @@ const Sidebar = () => {
       </div>
     );
   }
-  console.log("Sidebar user type:", user?.accountType);
 
   return (
     <div className="flex w-[200px] flex-col border-r border-gray-700 h-[calc(100vh-3.5rem)] bg-gray-900 py-10">
@@ -32,11 +30,15 @@ const Sidebar = () => {
           if (link.type && user?.accountType !== link.type) return null;
 
           return (
-            <SidebarLink key={link.id} link={link} iconName={link.icon} />
+            <SidebarLink
+              key={link.id}
+              link={link}
+              iconName={link.icon}
+              onClick={onLinkClick} // Close mobile sidebar on link click
+            />
           );
         })}
       </div>
-      
 
       {/* Divider */}
       <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-gray-600"></div>
@@ -47,6 +49,7 @@ const Sidebar = () => {
         <SidebarLink
           link={{ name: "Settings", path: "/dashboard/settings" }}
           iconName="VscSettingsGear"
+          onClick={onLinkClick} // Close mobile sidebar on link click
         />
 
         {/* Logout Button */}
@@ -67,5 +70,6 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
 
 
